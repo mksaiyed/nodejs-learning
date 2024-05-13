@@ -12,10 +12,18 @@ async function generateNewShortURL(req, res) {
         redirectURL: req.body.url,
         visiteHistory: [],
     });
-    return res.status(201).json({
-        message: "URL created successfully",
-        id: customShortId,
-    });
+    if (req.body.isTemplateRender === "true") {
+        // here we're rendering the html template
+        return res.render("home", {
+            message: "URL created successfully",
+            id: customShortId,
+        });
+    } else {
+        return res.status(201).json({
+            message: "URL created successfully",
+            id: customShortId,
+        });
+    }
 }
 
 async function redirectToUrl(req, res) {
@@ -51,8 +59,17 @@ async function getAnalytics(req, res) {
     });
 }
 
+async function generateHomePage(req, res) {
+    const allUrls = await Url.find({});
+
+    return res.render("home", {
+        urls: allUrls,
+    });
+}
+
 module.exports = {
     generateNewShortURL,
     redirectToUrl,
     getAnalytics,
+    generateHomePage,
 };

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>URL Shortener</title>
+    </head>
+    <body>
+        <h1><a href="/" style="text-decoration: none"> URL Shortener </a></h1>
+        <% if(locals.id){ %>
+        <p>
+            Here is your short url
+            <a href="http://localhost:8000/id/${}" style="text-decoration: none"
+                >http://localhost:8000/id/ <% id %>
+            </a>
+        </p>
+        <% } %>
+        <form action="/api/url" method="POST">
+            <label for="Original URL">Enter Your Original URL</label>
+            <input type="text" name="url" placeholder="http://example.com" />
+            <input type="hidden" name="isTemplateRender" value="true" />
+            <input type="submit" value="Generate" />
+        </form>
+    </body>
+</html>
